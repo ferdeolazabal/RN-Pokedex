@@ -3,11 +3,13 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     globalMargin: {
         marginHorizontal: 20,
+        marginBottom: 20,
     },
     text: {
         color: 'black',
     },
     pokebolaBG: {
+        position: 'absolute',
         width: 300,
         height: 300,
         top: -100,
