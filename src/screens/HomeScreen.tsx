@@ -3,7 +3,6 @@ import React from 'react';
 import styles from '../theme/AppTheme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { usePokemonPaginated } from '../hooks/usePokemonPaginated';
-import { FadeInImage } from '../components/FadeInImage';
 import PokemonCard from '../components/PokemonCard';
 
 const HomeScreen = () => {
@@ -14,11 +13,7 @@ const HomeScreen = () => {
     return (
         <>
             <Image style={styles.pokebolaBG} source={require('../assets/pokebola.png')} />
-            <View
-                style={{
-                    ...styles.globalMargin,
-                    alignItems: 'center',
-                }}>
+            <View style={{ alignItems: 'center' }}>
                 <FlatList
                     data={simplePokemonList}
                     keyExtractor={(poke) => poke.id}
@@ -31,6 +26,7 @@ const HomeScreen = () => {
                                 ...styles.globalMargin,
                                 top: top + 20,
                                 marginBottom: top + 20,
+                                paddingBottom: 10,
                             }}>
                             Pokedex
                         </Text>
