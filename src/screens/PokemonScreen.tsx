@@ -1,10 +1,10 @@
 import React from 'react';
+import { FadeInImage } from '../components/FadeInImage';
 import { RootsStackParams } from '../navigator/Navigator';
 import { StackScreenProps } from '@react-navigation/stack';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FadeInImage } from '../components/FadeInImage';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props extends StackScreenProps<RootsStackParams, 'PokemonScreen'> {}
 
@@ -14,7 +14,7 @@ const PokemonScreen = ({ navigation, route }: Props) => {
     const { id, name, picture } = simplePokemon;
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             <View
                 style={{
                     ...styles.headerContainer,
@@ -23,11 +23,16 @@ const PokemonScreen = ({ navigation, route }: Props) => {
                 <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={() => navigation.pop()}
-                    style={{ ...styles.backButton, top: top + 10 }}>
+                    style={{ ...styles.backButton, top: top + 5 }}>
                     <Icon name="arrow-back-outline" color="white" size={40} />
-                    <FadeInImage uri={picture} style={styles.pokemonImage} />
-                    <Text style={{ ...styles.pokemonName, top: top + 10 }}>{name}</Text>
                 </TouchableOpacity>
+
+                <Text style={{ ...styles.pokemonName, top: top + 40 }}>
+                    {name + `\n`} #{id}
+                </Text>
+
+                <Image style={styles.pokeball} source={require('../assets/pokebola-blanca.png')} />
+                <FadeInImage uri={picture} style={styles.pokemonImage} />
             </View>
         </View>
     );
@@ -45,18 +50,28 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 10,
     },
-    pokemonImage: {
-        position: 'absolute',
-        // right: -8,
-        // bottom: 5,
-        width: 320,
-        height: 320,
-    },
     pokemonName: {
         color: 'white',
         fontSize: 40,
         alignSelf: 'flex-start',
-        left: 20,
+        left: 10,
+    },
+    pokeball: {
+        width: 250,
+        height: 250,
+        top: -10,
+        opacity: 0.7,
+    },
+    pokemonImage: {
+        width: 250,
+        height: 250,
+        position: 'absolute',
+        bottom: -10,
+    },
+    loadingIndicator: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 export default PokemonScreen;
