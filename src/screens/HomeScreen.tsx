@@ -11,7 +11,7 @@ const HomeScreen = () => {
     const { isLoading, simplePokemonList, loadPokemons } = usePokemonPaginated();
 
     return (
-        <>
+        <View>
             <Image style={styles.pokebolaBG} source={require('../assets/pokebola.png')} />
             <View style={{ alignItems: 'center' }}>
                 <FlatList
@@ -39,7 +39,7 @@ const HomeScreen = () => {
                     }
                 />
             </View>
-        </>
+        </View>
     );
 };
 

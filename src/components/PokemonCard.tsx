@@ -1,16 +1,46 @@
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image } from 'react-native';
-import React from 'react';
 import { SimplePokemon } from '../interfaces/pokemonInterfaces';
 import { FadeInImage } from './FadeInImage';
+import ImageColors from 'react-native-image-colors';
+import { useNavigation } from '@react-navigation/native';
 
 const windowWith = Dimensions.get('window').width;
 interface Props {
     pokemon: SimplePokemon;
 }
 const PokemonCard = ({ pokemon }: Props) => {
+    const [bgColor, setbgColor] = useState('grey');
+
+    const isMounted = useRef(true);
+
+    const navigation = useNavigation<any>();
+
+    useEffect(() => {
+        ImageColors.getColors(pokemon?.picture, { fallback: 'grey' }).then((colors) => {
+            if (!isMounted.current) return;
+
+            colors.platform === 'android'
+                ? setbgColor(colors.dominant || 'grey')
+                : setbgColor(colors.platform || 'grey');
+        });
+        return () => {
+            isMounted.current = false;
+        };
+    }, []);
+
     return (
-        <TouchableOpacity activeOpacity={0.9}>
-            <View style={{ ...styles.cardContainer, width: windowWith * 0.4 }}>
+        <TouchableOpacity
+            onPress={() =>
+                navigation.navigate('PokemonScreen', { simplePokemon: pokemon, color: bgColor })
+            }
+            activeOpacity={0.9}>
+            <View
+                style={{
+                    ...styles.cardContainer,
+                    width: windowWith * 0.44,
+                    backgroundColor: bgColor,
+                }}>
                 <Text style={{ ...styles.name }}>
                     {pokemon.name}
                     {'\n#' + pokemon.id}
@@ -29,8 +59,7 @@ const PokemonCard = ({ pokemon }: Props) => {
 
 const styles = StyleSheet.create({
     cardContainer: {
-        marginHorizontal: 5,
-        backgroundColor: 'red',
+        marginHorizontal: 8,
         height: 120,
         width: 200,
         marginBottom: 25,
