@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, Platform, ViewStyle, StyleProp } from 'react-native';
+import { StyleSheet, TextInput, View, Platform, ViewStyle, StyleProp } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 
 const SearchInput = ({ style }: Props) => {
     return (
-        <View style={{ ...styles.container, ...(style as any) }}>
+        <View style={{ ...(style as any) }}>
             <View style={styles.textBackground}>
                 <TextInput
                     placeholderTextColor="grey"
@@ -29,10 +29,6 @@ const SearchInput = ({ style }: Props) => {
 export default SearchInput;
 
 const styles = StyleSheet.create({
-    container: {
-        // marginTop: 15,
-        // backgroundColor: 'green',
-    },
     textBackground: {
         backgroundColor: '#F3F1F3',
         borderRadius: 50,
