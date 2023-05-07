@@ -3,8 +3,10 @@ import { FadeInImage } from '../components/FadeInImage';
 import { RootsStackParams } from '../navigator/Navigator';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { usePokemon } from '../hooks/usePokemon';
+import { PokemonDetails } from '../components/PokemonDetails';
 
 interface Props extends StackScreenProps<RootsStackParams, 'PokemonScreen'> {}
 
@@ -13,6 +15,7 @@ const PokemonScreen = ({ navigation, route }: Props) => {
     const { top } = useSafeAreaInsets();
     const { id, name, picture } = simplePokemon;
 
+    const { pokemon, isLoading } = usePokemon(id);
     return (
         <View style={{ flex: 1 }}>
             <View
@@ -27,20 +30,27 @@ const PokemonScreen = ({ navigation, route }: Props) => {
                     <Icon name="arrow-back-outline" color="white" size={40} />
                 </TouchableOpacity>
 
-                <Text style={{ ...styles.pokemonName, top: top + 40 }}>
+                <Text style={{ ...styles.pokemonName, top }}>
                     {name + `\n`} #{id}
                 </Text>
 
                 <Image style={styles.pokeball} source={require('../assets/pokebola-blanca.png')} />
                 <FadeInImage uri={picture} style={styles.pokemonImage} />
             </View>
+            {isLoading ? (
+                <View style={styles.loadingIndicator}>
+                    <ActivityIndicator color={color} size={50} />
+                </View>
+            ) : (
+                <PokemonDetails pokemon={pokemon} />
+            )}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     headerContainer: {
-        height: 340,
+        height: 300,
         zIndex: 999,
         alignItems: 'center',
         borderBottomRightRadius: 1000,
@@ -48,7 +58,8 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        left: 10,
+        alignSelf: 'flex-end',
+        right: 10,
     },
     pokemonName: {
         color: 'white',
@@ -59,14 +70,14 @@ const styles = StyleSheet.create({
     pokeball: {
         width: 250,
         height: 250,
-        top: -10,
+        top: -50,
         opacity: 0.7,
     },
     pokemonImage: {
         width: 250,
         height: 250,
         position: 'absolute',
-        bottom: -10,
+        bottom: -5,
     },
     loadingIndicator: {
         flex: 1,
