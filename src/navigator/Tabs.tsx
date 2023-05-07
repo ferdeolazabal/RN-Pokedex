@@ -1,8 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Navigator } from './Navigator';
-import SearchScreen from '../screens/SearchScreen';
+import { Navigator } from './Tab1';
 import { Platform } from 'react-native';
+
 import Icon from 'react-native-vector-icons/Ionicons';
+
+import { Tab2Screen } from './Tabs2';
 
 const Tab = createBottomTabNavigator();
 
@@ -13,7 +15,6 @@ export const Tabs = () => {
             screenOptions={{
                 headerShown: false,
                 tabBarStyle: {
-                    // backgroundColor: 'tra',
                     borderWidth: 0,
                     elevation: 0,
                     opacity: 0.8,
@@ -33,7 +34,7 @@ export const Tabs = () => {
             />
             <Tab.Screen
                 name="SearchScreen"
-                component={SearchScreen}
+                component={Tab2Screen}
                 options={{
                     tabBarLabel: 'Buscar',
                     tabBarIcon: ({ color }) => (
